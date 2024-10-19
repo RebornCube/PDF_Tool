@@ -50,7 +50,7 @@ def pick_save_location():
 def update_listbox():
     listbox.delete(0, tk.END)  # Clear current Listbox
     for file in pdf_files:
-        listbox.insert(tk.END, file)  # Add files to the Listbox
+        listbox.insert(tk.END, file.split("/")[-1])  # Add files to the Listbox
 
 # Function to move the selected file up in the list
 def move_up():
@@ -158,8 +158,8 @@ clear_button = tk.Button(button_frame, text="Clear List", command=clear_files)
 clear_button.pack(side=tk.LEFT, padx=10)
 
 # New button to process the picked files
-process_button = tk.Button(root, text="Join Files", command=process_files)
-process_button.pack(pady=10)
+join_button = tk.Button(root, text="Join Files", command=process_files)
+join_button.pack(pady=10)
 
 # Start the Tkinter event loop
 root.mainloop()
