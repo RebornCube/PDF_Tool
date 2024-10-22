@@ -2,6 +2,11 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 from pypdf import PdfWriter
+import os
+from datetime import datetime
+
+# Get User
+name = os.environ.get('USERNAME')
 
 # Initialize the GUI application
 root = tk.Tk()
@@ -11,6 +16,20 @@ root.geometry("600x500")
 # List to store selected PDF file paths
 pdf_files = []
 save_location = ""
+
+# Log use to text file
+def log_use(output):
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%d-%m-%Y %H:%M:%S")
+
+    with open("log.txt", "a") as file:
+        file.write(f"Date and Time: {formatted_time}\n")
+        file.write(f"Username: {name}\n")
+        file.write(f'The following {len(pdf_files)} files were joined in the following order:\n')
+        for pdf in pdf_files:
+            file.write(f">\t{pdf}\n")
+        file.write(f"Save Location: {output}\n\n")
+
 
 # Function to merge files
 def join_pdf(pdfs, save_path, filename):
@@ -28,8 +47,14 @@ def join_pdf(pdfs, save_path, filename):
         merger.write(output_path)
         merger.close()
         messagebox.showinfo("Success", f"File created: {output_path}")
+        
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving the file: {e}")
+
+    try:
+        log_use(output_path)
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while logging the session: {e}")
 
 # Function to pick files
 def pick_files():
