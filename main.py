@@ -50,11 +50,11 @@ def join_pdf(pdfs, save_path, filename):
         
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving the file: {e}")
-
-    try:
-        log_use(output_path)
-    except Exception as e:
-        messagebox.showerror("Error", f"An error occurred while logging the session: {e}")
+    else:
+        try:
+            log_use(output_path)
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred while logging the session: {e}")
 
 # Function to pick files
 def pick_files():
